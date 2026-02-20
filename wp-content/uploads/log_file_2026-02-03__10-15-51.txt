@@ -1,0 +1,37 @@
+
+---Downloaded files---
+The import files for: Healthy Food were successfully downloaded!
+Initial max execution time = 180
+Files info:
+Site URL = http://new.starakotelna.cz
+Data file = /data/web/virtuals/390712/virtual/www/domains/new.starakotelna.cz/wp-content/uploads/demo-content-import-file_2026-02-03__10-15-51.xml
+Widget file = /data/web/virtuals/390712/virtual/www/domains/new.starakotelna.cz/wp-content/uploads/demo-widgets-import-file_2026-02-03__10-15-51.json
+Customizer file = /data/web/virtuals/390712/virtual/www/domains/new.starakotelna.cz/wp-content/uploads/demo-customizer-import-file_2026-02-03__10-15-51.dat
+Redux files:
+not defined!
+
+------
+New AJAX call!
+
+
+------
+New AJAX call!
+
+
+---ocdi/before_widgets_import---
+
+
+---Importing widgets---
+Page Sidebar : 
+
+Vyhledávání - No Title - Imported
+Nejnovější příspěvky - No Title - Imported
+Nejnovější komentáře - No Title - Imported
+
+
+
+---Importing customizer settings---
+Customizer settings import finished!
+
+---ocdi/after_import---
+

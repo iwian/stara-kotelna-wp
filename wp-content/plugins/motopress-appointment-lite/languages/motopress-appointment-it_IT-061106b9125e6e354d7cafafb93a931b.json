@@ -1,0 +1,96 @@
+{
+    "translation-revision-date": "2025-12-05 14:10",
+    "generator": "WP-CLI\/2.11.0",
+    "source": "assets\/js\/calendar-page.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "it_IT",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Calendar": [
+                "Calendario"
+            ],
+            "Services": [
+                "Servizi"
+            ],
+            "Service": [
+                "Servizio"
+            ],
+            "Date": [
+                "Data"
+            ],
+            "Employees": [
+                "Dipendenti"
+            ],
+            "Employee": [
+                "Dipendente"
+            ],
+            "Customer": [
+                "Cliente"
+            ],
+            "Booking": [
+                "Prenotazione"
+            ],
+            "Location": [
+                "Localit\u00e0"
+            ],
+            "Locations": [
+                "Posizioni"
+            ],
+            "Clients": [
+                "Clienti"
+            ],
+            "All day": [
+                "Tutto il giorno"
+            ],
+            "Bookings": [
+                "Prenotazioni"
+            ],
+            "Timetable": [
+                "Orario"
+            ],
+            "View Booking": [
+                "Visualizza Prenotazione"
+            ],
+            "Reservation details": [
+                "Informazioni sulla prenotazione"
+            ],
+            "Next": [
+                "Successivo"
+            ],
+            "Today": [
+                "Oggi"
+            ],
+            "All": [
+                "Tutti i"
+            ],
+            "Statuses": [
+                "Stati"
+            ],
+            "View Bookings": [
+                ""
+            ],
+            "Previous": [
+                "Precedente"
+            ],
+            "Month": [
+                "Mese"
+            ],
+            "Week": [
+                "Settimana"
+            ],
+            "Day": [
+                "Giorno"
+            ],
+            "There are no events in this range.": [
+                "Non ci sono eventi in questo intervallo."
+            ],
+            "+%d more": [
+                "+%d in pi\u00f9"
+            ]
+        }
+    }
+}
