@@ -1,0 +1,18 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# WordPress config (contains DB credentials)
+wp-config.php
+
+# Uploads (large media files)
+wp-content/uploads/
+
+# Cache
+wp-content/cache/
+cache/
+
+# Backup files
+*.bak
+*.swp
+*~

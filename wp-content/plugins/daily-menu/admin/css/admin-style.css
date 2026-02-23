@@ -1,0 +1,71 @@
+#daily-menu-wrap .daily-menu-category {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+#daily-menu-wrap .daily-menu-category-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#daily-menu-wrap .daily-menu-category-name {
+    font-size: 16px;
+    font-weight: 600;
+    flex: 1;
+    padding: 5px 10px;
+}
+
+#daily-menu-wrap .daily-menu-items-table {
+    margin-bottom: 10px;
+}
+
+#daily-menu-wrap .daily-menu-items-table .col-amount {
+    width: 12%;
+}
+
+#daily-menu-wrap .daily-menu-items-table .col-name {
+    width: 60%;
+}
+
+#daily-menu-wrap .daily-menu-items-table .col-price {
+    width: 15%;
+}
+
+#daily-menu-wrap .daily-menu-items-table .col-actions {
+    width: 13%;
+    text-align: center;
+}
+
+#daily-menu-wrap .daily-menu-items-table input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#daily-menu-wrap .daily-menu-remove-category,
+#daily-menu-wrap .daily-menu-remove-item {
+    color: #a00;
+}
+
+#daily-menu-wrap .daily-menu-remove-category:hover,
+#daily-menu-wrap .daily-menu-remove-item:hover {
+    color: #dc3232;
+}
+
+#daily-menu-messages .notice {
+    margin: 10px 0;
+}
+
+#daily-menu-date-display {
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+#daily-menu-wrap .submit {
+    display: flex;
+    gap: 10px;
+}
