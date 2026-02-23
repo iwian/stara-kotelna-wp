@@ -1,59 +1,81 @@
+/*
+ * Daily menu shortcode — minimal overrides.
+ * .elementor-heading-title styled by Elementor.
+ * .food-menu-* base styles from grandrestaurant-elementor.css.
+ */
+
 .daily-menu-shortcode-wrapper {
-    max-width: 800px;
-}
-
-.daily-menu-date-heading {
-    margin-bottom: 30px;
-}
-
-.daily-menu-category-section {
-    margin-bottom: 30px;
-}
-
-.daily-menu-category-heading {
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
-/* Fallback: ensure table layout works even if Elementor CSS is not loaded */
-.daily-menu-shortcode-wrapper .food-menu-content-top-holder {
-    display: table;
     width: 100%;
 }
 
-.daily-menu-shortcode-wrapper .food-menu-content-title-holder,
-.daily-menu-shortcode-wrapper .food-menu-content-title-line,
-.daily-menu-shortcode-wrapper .food-menu-content-price-holder {
-    display: table-cell;
-    vertical-align: bottom;
+/* Date heading */
+.daily-menu-date-section {
+    margin-bottom: 25px;
+}
+
+.daily-menu-date-section h2.elementor-heading-title {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+/* Category sections */
+.daily-menu-category-section {
+    margin-bottom: 25px;
+}
+
+/* Category heading */
+.daily-menu-category-section > h3.elementor-heading-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+/* Remove extra left padding the theme adds for image-less items */
+.daily-menu-shortcode-wrapper .food-menu-content.no-food-img {
+    padding-left: 0;
+}
+
+/* Override table-cell layout with flexbox to handle long names */
+.daily-menu-shortcode-wrapper .food-menu-content-top-holder {
+    display: flex;
+    align-items: baseline;
+    width: 100%;
 }
 
 .daily-menu-shortcode-wrapper .food-menu-content-title-holder {
-    width: 1%;
-    white-space: nowrap;
+    display: inline;
+    width: auto;
+    white-space: normal;
     padding-right: 5px;
+    flex-shrink: 1;
 }
 
 .daily-menu-shortcode-wrapper .food-menu-content-title-line {
-    width: 98%;
-    height: 3px;
-    border-bottom: 2px dotted #000;
+    display: block;
+    flex: 1;
+    min-width: 30px;
+    width: auto;
+    align-self: flex-end;
 }
 
 .daily-menu-shortcode-wrapper .food-menu-content-price-holder {
-    width: 1%;
+    display: inline;
+    width: auto;
     white-space: nowrap;
+    flex-shrink: 0;
     padding-left: 5px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 400;
 }
 
-.daily-menu-shortcode-wrapper .food-menu-content {
-    padding: 10px 0;
+/* Item title font size */
+.daily-menu-shortcode-wrapper .food-menu-content-title-holder h3,
+.daily-menu-shortcode-wrapper h3.food-menu-title {
+    font-size: 20px;
 }
 
+/* Amount shown below the item name */
 .daily-menu-shortcode-wrapper .food-menu-desc {
-    margin-top: -5px;
-    color: #666;
-    font-size: 13px;
+    font-size: 12px;
+    opacity: 0.7;
 }

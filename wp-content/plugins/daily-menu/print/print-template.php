@@ -38,7 +38,12 @@ if ( ! empty( $date ) ) {
             background: #fff;
             font-size: 14px;
             line-height: 1.4;
-            padding: 20mm 15mm;
+            padding: 0;
+        }
+
+        #print-content {
+            padding: 15mm;
+            transform-origin: top left;
         }
 
         h1 {
@@ -57,7 +62,7 @@ if ( ! empty( $date ) ) {
         }
 
         .print-category {
-            margin-bottom: 6mm;
+            margin-bottom: 5mm;
         }
 
         .print-category-name {
@@ -70,63 +75,55 @@ if ( ! empty( $date ) ) {
         }
 
         .print-item {
-            display: table;
+            display: flex;
+            align-items: baseline;
             width: 100%;
-            padding: 1.5mm 0;
+            padding: 1mm 0;
         }
 
         .print-item-name {
-            display: table-cell;
-            width: 1%;
-            white-space: nowrap;
-            font-weight: 600;
-            padding-right: 3mm;
+            font-weight: 400;
+            padding-right: 2mm;
         }
 
         .print-item-amount {
-            display: table-cell;
-            width: 1%;
             white-space: nowrap;
             color: #555;
-            padding-right: 3mm;
+            padding-right: 2mm;
             font-size: 12px;
+            flex-shrink: 0;
         }
 
-        .print-item-dots {
-            display: table-cell;
-            width: 98%;
-            border-bottom: 1px dotted #999;
-            position: relative;
-            bottom: 4px;
+        .print-item-spacer {
+            flex: 1;
         }
 
         .print-item-price {
-            display: table-cell;
-            width: 1%;
             white-space: nowrap;
             text-align: right;
             font-weight: 600;
-            padding-left: 3mm;
+            padding-left: 2mm;
+            flex-shrink: 0;
+        }
+
+        @page {
+            size: A4;
+            margin: 10mm;
         }
 
         @media print {
-            body {
-                padding: 10mm;
-            }
-
-            @page {
-                size: A4;
-                margin: 15mm;
-            }
-
             .no-print {
                 display: none !important;
+            }
+
+            #print-content {
+                padding: 0;
             }
         }
 
         .no-print {
             text-align: center;
-            margin-bottom: 20px;
+            padding: 15px;
         }
 
         .no-print button {
@@ -150,29 +147,57 @@ if ( ! empty( $date ) ) {
         <button onclick="window.print();">Vytisknout</button>
     </div>
 
-    <h1>Denní menu</h1>
-    <?php if ( ! empty( $date_display ) ) : ?>
-        <div class="print-date"><?php echo esc_html( $date_display ); ?></div>
-    <?php endif; ?>
+    <div id="print-content">
+        <h1>Denní menu</h1>
+        <?php if ( ! empty( $date_display ) ) : ?>
+            <div class="print-date"><?php echo esc_html( $date_display ); ?></div>
+        <?php endif; ?>
 
-    <?php foreach ( $categories as $category ) : ?>
-        <?php if ( empty( $category['items'] ) ) { continue; } ?>
-        <div class="print-category">
-            <div class="print-category-name"><?php echo esc_html( $category['name'] ); ?></div>
-            <?php foreach ( $category['items'] as $item ) : ?>
-                <?php if ( empty( $item['name'] ) ) { continue; } ?>
-                <div class="print-item">
-                    <span class="print-item-name"><?php echo esc_html( $item['name'] ); ?></span>
-                    <?php if ( ! empty( $item['amount'] ) ) : ?>
-                        <span class="print-item-amount">(<?php echo esc_html( $item['amount'] ); ?>)</span>
-                    <?php endif; ?>
-                    <span class="print-item-dots"></span>
-                    <?php if ( ! empty( $item['price'] ) ) : ?>
-                        <span class="print-item-price"><?php echo esc_html( $item['price'] ); ?> Kč</span>
-                    <?php endif; ?>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    <?php endforeach; ?>
+        <?php foreach ( $categories as $category ) : ?>
+            <?php if ( empty( $category['items'] ) ) { continue; } ?>
+            <div class="print-category">
+                <div class="print-category-name"><?php echo esc_html( $category['name'] ); ?></div>
+                <?php foreach ( $category['items'] as $item ) : ?>
+                    <?php if ( empty( $item['name'] ) ) { continue; } ?>
+                    <div class="print-item">
+                        <span class="print-item-name"><?php echo esc_html( $item['name'] ); ?></span>
+                        <?php if ( ! empty( $item['amount'] ) ) : ?>
+                            <span class="print-item-amount">(<?php echo esc_html( $item['amount'] ); ?>)</span>
+                        <?php endif; ?>
+                        <span class="print-item-spacer"></span>
+                        <?php if ( ! empty( $item['price'] ) ) : ?>
+                            <span class="print-item-price"><?php echo esc_html( $item['price'] ); ?> Kč</span>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <script>
+    // Auto-scale content to fit one A4 page
+    (function() {
+        var content = document.getElementById('print-content');
+        // A4 printable height: 297mm - 2×10mm margin = 277mm ≈ 1047px at 96dpi
+        var maxHeight = 277 * (96 / 25.4); // ~1047px
+
+        function fitToPage() {
+            content.style.transform = 'none';
+            var h = content.scrollHeight;
+            if (h > maxHeight) {
+                var scale = maxHeight / h;
+                content.style.transform = 'scale(' + scale + ')';
+                content.style.width = (100 / scale) + '%';
+            }
+        }
+
+        // Fit after fonts load
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(fitToPage);
+        } else {
+            window.addEventListener('load', fitToPage);
+        }
+    })();
+    </script>
 </body>
 </html>

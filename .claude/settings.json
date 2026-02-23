@@ -7,7 +7,8 @@
       "Bash(ls:*)",
       "mcp__context7__query-docs",
       "mcp__context7__resolve-library-id",
-      "Read(//Users/danielpiterak/Documents/VS Code/stara-kotelna-wp/**)"
+      "Read(//Users/danielpiterak/Documents/VS Code/stara-kotelna-wp/**)",
+      "WebFetch(domain:new.starakotelna.cz)"
     ]
   }
 }

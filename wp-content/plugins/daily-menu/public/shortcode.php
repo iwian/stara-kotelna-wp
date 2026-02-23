@@ -27,7 +27,7 @@ function daily_menu_shortcode_render( $atts ) {
     $date_display = '';
     if ( ! empty( $date ) ) {
         $timestamp    = strtotime( $date );
-        $day_name     = $czech_days[ (int) date( 'w', $timestamp ) ];
+        $day_name     = mb_convert_case( $czech_days[ (int) date( 'w', $timestamp ) ], MB_CASE_TITLE, 'UTF-8' );
         $date_display = $day_name . ' ' . date( 'j.n.', $timestamp );
     }
 
@@ -35,14 +35,16 @@ function daily_menu_shortcode_render( $atts ) {
     ?>
     <div class="daily-menu-shortcode-wrapper">
         <?php if ( ! empty( $date_display ) ) : ?>
-            <h2 class="daily-menu-date-heading">Denní menu &mdash; <?php echo esc_html( $date_display ); ?></h2>
+            <div class="daily-menu-date-section">
+                <h2 class="elementor-heading-title"><?php echo esc_html( $date_display ); ?></h2>
+            </div>
         <?php endif; ?>
 
         <?php foreach ( $categories as $category ) : ?>
             <?php if ( empty( $category['items'] ) ) { continue; } ?>
 
             <div class="daily-menu-category-section">
-                <h3 class="daily-menu-category-heading"><?php echo esc_html( $category['name'] ); ?></h3>
+                <h3 class="elementor-heading-title"><?php echo esc_html( $category['name'] ); ?></h3>
 
                 <div class="food-menu-container">
                     <div class="food-menu-content-wrapper food-menu">
@@ -58,7 +60,7 @@ function daily_menu_shortcode_render( $atts ) {
                                         <div class="food-menu-content-title-line"></div>
                                         <?php if ( ! empty( $item['price'] ) ) : ?>
                                         <div class="food-menu-content-price-holder">
-                                            <span class="food-menu-content-price-normal"><?php echo esc_html( $item['price'] ); ?> Kč</span>
+                                            <span class="food-menu-content-price-normal"><?php echo esc_html( $item['price'] ); ?>,- Kč</span>
                                         </div>
                                         <?php endif; ?>
                                     </div>
