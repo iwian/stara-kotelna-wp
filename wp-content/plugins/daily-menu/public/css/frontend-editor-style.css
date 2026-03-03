@@ -1,0 +1,421 @@
+/* ==========================================================================
+   Frontend Menu Editor — Standalone Admin-like Styles
+   Replaces WordPress admin CSS for use outside wp-admin.
+   ========================================================================== */
+
+/* ---------- Reset & Base ---------- */
+
+.daily-menu-frontend-body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                 Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-size: 13px;
+    line-height: 1.4em;
+    color: #1d2327;
+    background: #f0f0f1;
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.daily-menu-frontend-body *,
+.daily-menu-frontend-body *::before,
+.daily-menu-frontend-body *::after {
+    box-sizing: border-box;
+}
+
+/* ---------- .wrap (admin page container) ---------- */
+
+.daily-menu-frontend-body .wrap {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.daily-menu-frontend-body .wrap h1 {
+    font-size: 23px;
+    font-weight: 400;
+    margin: 0 0 15px;
+    padding: 9px 0 4px;
+    line-height: 1.3;
+    color: #1d2327;
+}
+
+/* ---------- .form-table ---------- */
+
+.daily-menu-frontend-body .form-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.daily-menu-frontend-body .form-table th {
+    width: 200px;
+    vertical-align: top;
+    text-align: left;
+    padding: 20px 10px 20px 0;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.daily-menu-frontend-body .form-table td {
+    padding: 15px 10px;
+    vertical-align: top;
+}
+
+.daily-menu-frontend-body .form-table label {
+    font-weight: 600;
+}
+
+/* ---------- Text inputs ---------- */
+
+.daily-menu-frontend-body input[type="text"],
+.daily-menu-frontend-body input[type="number"] {
+    font-size: 13px;
+    padding: 4px 8px;
+    line-height: 2;
+    min-height: 30px;
+    border: 1px solid #8c8f94;
+    border-radius: 4px;
+    background: #fff;
+    color: #2c3338;
+    outline: none;
+    transition: border-color 0.1s;
+}
+
+.daily-menu-frontend-body input[type="text"]:focus {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+}
+
+.daily-menu-frontend-body .regular-text {
+    width: 25em;
+    max-width: 100%;
+}
+
+/* ---------- .description ---------- */
+
+.daily-menu-frontend-body .description {
+    color: #646970;
+    font-size: 13px;
+    font-style: italic;
+    margin: 0;
+}
+
+/* ---------- Buttons ---------- */
+
+.daily-menu-frontend-body .button {
+    display: inline-block;
+    font-size: 13px;
+    line-height: 2.15384615;
+    min-height: 30px;
+    padding: 0 10px;
+    cursor: pointer;
+    border: 1px solid #2271b1;
+    border-radius: 3px;
+    background: #f6f7f7;
+    color: #2271b1;
+    text-decoration: none;
+    white-space: nowrap;
+    vertical-align: middle;
+    font-family: inherit;
+}
+
+.daily-menu-frontend-body .button:hover {
+    background: #f0f0f1;
+    border-color: #0a4b78;
+    color: #0a4b78;
+}
+
+.daily-menu-frontend-body .button-primary {
+    background: #2271b1;
+    border-color: #2271b1;
+    color: #fff;
+}
+
+.daily-menu-frontend-body .button-primary:hover {
+    background: #135e96;
+    border-color: #135e96;
+    color: #fff;
+}
+
+.daily-menu-frontend-body .button:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+/* ---------- .widefat table ---------- */
+
+.daily-menu-frontend-body .widefat {
+    width: 100%;
+    border-spacing: 0;
+    border: 1px solid #c3c4c7;
+    border-radius: 0;
+    background: #fff;
+}
+
+.daily-menu-frontend-body .widefat thead th {
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 400;
+    color: #2c3338;
+    background: #fff;
+    border-bottom: 1px solid #c3c4c7;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.daily-menu-frontend-body .widefat td {
+    padding: 8px 10px;
+    vertical-align: middle;
+    border-bottom: 1px solid #f0f0f1;
+}
+
+.daily-menu-frontend-body .widefat tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ---------- Notices ---------- */
+
+.daily-menu-frontend-body .notice {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-left-width: 4px;
+    padding: 1px 12px;
+    margin: 10px 0;
+}
+
+.daily-menu-frontend-body .notice p {
+    margin: 0.5em 0;
+    padding: 2px;
+    font-size: 13px;
+}
+
+.daily-menu-frontend-body .notice-success {
+    border-left-color: #00a32a;
+}
+
+.daily-menu-frontend-body .notice-error {
+    border-left-color: #d63638;
+}
+
+/* ---------- .submit ---------- */
+
+.daily-menu-frontend-body .submit {
+    padding: 0;
+    margin: 0;
+}
+
+/* ---------- <hr> ---------- */
+
+.daily-menu-frontend-body hr {
+    border: none;
+    border-top: 1px solid #c3c4c7;
+    margin: 15px 0;
+}
+
+/* ==========================================================================
+   Plugin-specific styles (replicated from admin-style.css)
+   ========================================================================== */
+
+#daily-menu-wrap .daily-menu-category {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+#daily-menu-wrap .daily-menu-category-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#daily-menu-wrap .daily-menu-category-name {
+    font-size: 16px;
+    font-weight: 600;
+    flex: 1;
+    padding: 5px 10px;
+}
+
+#daily-menu-wrap .daily-menu-items-table {
+    margin-bottom: 10px;
+}
+
+#daily-menu-wrap .daily-menu-items-table .col-amount {
+    width: 12%;
+}
+
+#daily-menu-wrap .daily-menu-items-table .col-name {
+    width: 60%;
+}
+
+#daily-menu-wrap .daily-menu-items-table .col-price {
+    width: 15%;
+}
+
+#daily-menu-wrap .daily-menu-items-table .col-actions {
+    width: 13%;
+    text-align: center;
+}
+
+#daily-menu-wrap .daily-menu-items-table input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#daily-menu-wrap .daily-menu-remove-category,
+#daily-menu-wrap .daily-menu-remove-item {
+    color: #a00;
+}
+
+#daily-menu-wrap .daily-menu-remove-category:hover,
+#daily-menu-wrap .daily-menu-remove-item:hover {
+    color: #dc3232;
+}
+
+#daily-menu-messages .notice {
+    margin: 10px 0;
+}
+
+#daily-menu-date-display {
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+#daily-menu-wrap .submit {
+    display: flex;
+    gap: 10px;
+}
+
+/* ==========================================================================
+   PIN Login Form Styles
+   ========================================================================== */
+
+.daily-menu-pin-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.daily-menu-pin-box {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 40px;
+    max-width: 380px;
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.daily-menu-pin-box h2 {
+    font-size: 20px;
+    font-weight: 400;
+    margin: 0 0 20px;
+    color: #1d2327;
+    text-align: center;
+}
+
+.daily-menu-pin-error {
+    background: #fcf0f1;
+    border-left: 4px solid #d63638;
+    padding: 10px 14px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: #d63638;
+}
+
+.daily-menu-pin-box label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #1d2327;
+}
+
+.daily-menu-pin-box input[type="text"] {
+    width: 100%;
+    font-size: 24px;
+    text-align: center;
+    letter-spacing: 8px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #8c8f94;
+    border-radius: 4px;
+}
+
+.daily-menu-pin-box input[type="text"]:focus {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+    outline: none;
+}
+
+.daily-menu-pin-box button[type="submit"] {
+    width: 100%;
+    font-size: 14px;
+    line-height: 2.3;
+    min-height: 36px;
+    padding: 0 12px;
+    cursor: pointer;
+    border: 1px solid #2271b1;
+    border-radius: 3px;
+    background: #2271b1;
+    color: #fff;
+    font-family: inherit;
+    font-weight: 600;
+}
+
+.daily-menu-pin-box button[type="submit"]:hover {
+    background: #135e96;
+    border-color: #135e96;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media screen and (max-width: 782px) {
+    .daily-menu-frontend-body .form-table th,
+    .daily-menu-frontend-body .form-table td {
+        display: block;
+        width: 100%;
+        padding: 5px 0;
+    }
+
+    .daily-menu-frontend-body .form-table th {
+        padding-top: 10px;
+    }
+
+    .daily-menu-frontend-body .regular-text {
+        width: 100%;
+    }
+
+    .daily-menu-frontend-body .wrap {
+        padding: 10px;
+        margin: 10px;
+    }
+
+    #daily-menu-wrap .daily-menu-category-header {
+        flex-wrap: wrap;
+    }
+
+    #daily-menu-wrap .daily-menu-items-table .col-amount {
+        width: 15%;
+    }
+
+    #daily-menu-wrap .daily-menu-items-table .col-name {
+        width: 45%;
+    }
+
+    #daily-menu-wrap .daily-menu-items-table .col-price {
+        width: 20%;
+    }
+
+    #daily-menu-wrap .daily-menu-items-table .col-actions {
+        width: 20%;
+    }
+}

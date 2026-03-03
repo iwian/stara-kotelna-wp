@@ -13,42 +13,10 @@ function daily_menu_ajax_save() {
         wp_send_json_error( 'Nemáte oprávnění.' );
     }
 
-    $raw = isset( $_POST['menu_data'] ) ? wp_unslash( $_POST['menu_data'] ) : '';
-    $menu_data = json_decode( $raw, true );
+    $sanitized = daily_menu_sanitize_data( isset( $_POST['menu_data'] ) ? $_POST['menu_data'] : '' );
 
-    if ( ! is_array( $menu_data ) ) {
-        wp_send_json_error( 'Neplatná data.' );
-    }
-
-    // Sanitize
-    $sanitized = array(
-        'date'       => sanitize_text_field( $menu_data['date'] ),
-        'categories' => array(),
-    );
-
-    if ( ! preg_match( '/^\d{4}-\d{2}-\d{2}$/', $sanitized['date'] ) ) {
-        wp_send_json_error( 'Neplatný formát data.' );
-    }
-
-    if ( isset( $menu_data['categories'] ) && is_array( $menu_data['categories'] ) ) {
-        foreach ( $menu_data['categories'] as $cat ) {
-            $sanitized_cat = array(
-                'name'  => sanitize_text_field( $cat['name'] ),
-                'items' => array(),
-            );
-
-            if ( isset( $cat['items'] ) && is_array( $cat['items'] ) ) {
-                foreach ( $cat['items'] as $item ) {
-                    $sanitized_cat['items'][] = array(
-                        'amount' => sanitize_text_field( $item['amount'] ),
-                        'name'   => sanitize_text_field( $item['name'] ),
-                        'price'  => sanitize_text_field( $item['price'] ),
-                    );
-                }
-            }
-
-            $sanitized['categories'][] = $sanitized_cat;
-        }
+    if ( is_wp_error( $sanitized ) ) {
+        wp_send_json_error( $sanitized->get_error_message() );
     }
 
     update_option( DAILY_MENU_OPTION_KEY, $sanitized );
@@ -65,4 +33,18 @@ function daily_menu_ajax_print() {
 
     require_once DAILY_MENU_PATH . 'print/print-template.php';
     exit;
+}
+
+// PIN regeneration (admin only)
+add_action( 'wp_ajax_daily_menu_regenerate_pin', 'daily_menu_ajax_regenerate_pin' );
+
+function daily_menu_ajax_regenerate_pin() {
+    check_ajax_referer( 'daily_menu_save_nonce', 'nonce' );
+
+    if ( ! current_user_can( 'manage_options' ) ) {
+        wp_send_json_error( 'Nemáte oprávnění.' );
+    }
+
+    $pin = daily_menu_generate_pin();
+    wp_send_json_success( array( 'pin' => $pin ) );
 }
