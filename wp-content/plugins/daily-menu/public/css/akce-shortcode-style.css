@@ -1,0 +1,38 @@
+/*
+ * Akce (promotion) shortcode styles.
+ * Reuses Elementor and grandrestaurant theme classes where possible.
+ */
+
+.daily-menu-akce-wrapper {
+    width: 100%;
+}
+
+/* Promotion heading */
+.daily-menu-akce-wrapper h3.elementor-heading-title,
+.daily-menu-akce-wrapper h3.food-menu-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+/* Promotion image */
+.daily-menu-akce-image {
+    margin-bottom: 20px;
+}
+
+.daily-menu-akce-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    display: block;
+}
+
+/* Promotion text */
+.daily-menu-akce-text {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.daily-menu-akce-text p {
+    margin-bottom: 10px;
+}

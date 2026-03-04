@@ -10,11 +10,11 @@ if ( ! defined( 'WPINC' ) ) {
 function daily_menu_render_editor_form() {
     $data        = get_option( DAILY_MENU_OPTION_KEY, array() );
     $stored_date = isset( $data['date'] ) ? $data['date'] : '';
-    $today       = wp_date( 'Y-m-d' );
+    $tomorrow    = wp_date( 'Y-m-d', strtotime( '+1 day' ) );
     $categories  = isset( $data['categories'] ) ? $data['categories'] : array();
 
-    // If stored date differs from today, pre-fill today
-    $display_date = ( $stored_date === $today ) ? $stored_date : $today;
+    // If stored date differs from tomorrow, pre-fill tomorrow (menu is entered evening before)
+    $display_date = ( $stored_date === $tomorrow ) ? $stored_date : $tomorrow;
     ?>
     <div id="daily-menu-messages"></div>
 

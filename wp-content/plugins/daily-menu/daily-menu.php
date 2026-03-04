@@ -2,8 +2,8 @@
 /*
 Plugin Name: Denní menu
 Plugin URI:
-Description: Správa a zobrazení denního menu pro restauraci Stará Kotelna.
-Version: 2.0.0
+Description: Správa a zobrazení denního menu a akčních nabídek pro restauraci Stará Kotelna.
+Version: 2.1.0
 Author: Stará Kotelna
 Author URI:
 License: GPLv2
@@ -14,16 +14,18 @@ if ( ! defined( 'WPINC' ) ) {
     die();
 }
 
-define( 'DAILY_MENU_VERSION', '2.0.0' );
+define( 'DAILY_MENU_VERSION', '2.1.0' );
 define( 'DAILY_MENU_PATH', plugin_dir_path( __FILE__ ) );
 define( 'DAILY_MENU_URL', plugin_dir_url( __FILE__ ) );
 define( 'DAILY_MENU_OPTION_KEY', 'daily_menu_data' );
+define( 'DAILY_MENU_AKCE_OPTION_KEY', 'daily_menu_akce_data' );
 
 // Frontend editor constants
 define( 'DAILY_MENU_PIN_OPTION', 'daily_menu_editor_pin_hash' );
 define( 'DAILY_MENU_PIN_PLAIN_TRANSIENT', 'daily_menu_editor_pin_plain' );
 define( 'DAILY_MENU_RATE_LIMIT_PREFIX', 'daily_menu_rate_' );
 define( 'DAILY_MENU_FRONTEND_SLUG', 'upravy-menu' );
+define( 'DAILY_MENU_AKCE_SLUG', 'upravy-akce' );
 define( 'DAILY_MENU_COOKIE_NAME', 'daily_menu_auth' );
 
 // ============================================================================
@@ -31,7 +33,9 @@ define( 'DAILY_MENU_COOKIE_NAME', 'daily_menu_auth' );
 // ============================================================================
 
 require_once DAILY_MENU_PATH . 'includes/sanitization.php';
+require_once DAILY_MENU_PATH . 'includes/akce-sanitization.php';
 require_once DAILY_MENU_PATH . 'includes/form-renderer.php';
+require_once DAILY_MENU_PATH . 'includes/akce-form-renderer.php';
 require_once DAILY_MENU_PATH . 'includes/pin-auth.php';
 
 // ============================================================================
@@ -41,6 +45,8 @@ require_once DAILY_MENU_PATH . 'includes/pin-auth.php';
 if ( is_admin() ) {
     require_once DAILY_MENU_PATH . 'admin/admin-page.php';
     require_once DAILY_MENU_PATH . 'admin/admin-ajax.php';
+    require_once DAILY_MENU_PATH . 'admin/admin-akce-page.php';
+    require_once DAILY_MENU_PATH . 'admin/admin-akce-ajax.php';
 }
 
 // ============================================================================
@@ -48,7 +54,9 @@ if ( is_admin() ) {
 // ============================================================================
 
 require_once DAILY_MENU_PATH . 'public/frontend-editor-ajax.php';
+require_once DAILY_MENU_PATH . 'public/akce-frontend-editor-ajax.php';
 require_once DAILY_MENU_PATH . 'public/shortcode.php';
+require_once DAILY_MENU_PATH . 'public/akce-shortcode.php';
 
 // ============================================================================
 // Activation & Deactivation
@@ -104,12 +112,18 @@ function daily_menu_register_rewrite_rules() {
         'index.php?daily_menu_frontend=1',
         'top'
     );
+    add_rewrite_rule(
+        '^' . DAILY_MENU_AKCE_SLUG . '/?$',
+        'index.php?daily_menu_akce_frontend=1',
+        'top'
+    );
 }
 
 add_filter( 'query_vars', 'daily_menu_query_vars' );
 
 function daily_menu_query_vars( $vars ) {
     $vars[] = 'daily_menu_frontend';
+    $vars[] = 'daily_menu_akce_frontend';
     return $vars;
 }
 
@@ -136,12 +150,15 @@ function daily_menu_maybe_flush_rules() {
 add_action( 'template_redirect', 'daily_menu_frontend_template_redirect' );
 
 function daily_menu_frontend_template_redirect() {
-    if ( get_query_var( 'daily_menu_frontend' ) != '1' ) {
-        return;
+    if ( get_query_var( 'daily_menu_frontend' ) == '1' ) {
+        require DAILY_MENU_PATH . 'public/frontend-editor.php';
+        exit;
     }
 
-    require DAILY_MENU_PATH . 'public/frontend-editor.php';
-    exit;
+    if ( get_query_var( 'daily_menu_akce_frontend' ) == '1' ) {
+        require DAILY_MENU_PATH . 'public/akce-frontend-editor.php';
+        exit;
+    }
 }
 
 // ============================================================================
@@ -151,7 +168,7 @@ function daily_menu_frontend_template_redirect() {
 add_action( 'admin_menu', 'daily_menu_admin_menu' );
 
 function daily_menu_admin_menu() {
-    add_menu_page(
+    $menu_hook = add_menu_page(
         'Denní menu',
         'Denní menu',
         'edit_posts',
@@ -160,44 +177,103 @@ function daily_menu_admin_menu() {
         'dashicons-food',
         26
     );
+
+    add_submenu_page(
+        'daily-menu',
+        'Denní menu',
+        'Denní menu',
+        'edit_posts',
+        'daily-menu',
+        'daily_menu_render_admin_page'
+    );
+
+    $akce_hook = add_submenu_page(
+        'daily-menu',
+        'Akce',
+        'Akce',
+        'edit_posts',
+        'daily-menu-akce',
+        'daily_menu_akce_render_admin_page'
+    );
+
+    // Store hooks for enqueue matching
+    global $daily_menu_admin_hooks;
+    $daily_menu_admin_hooks = array(
+        'menu' => $menu_hook,
+        'akce' => $akce_hook,
+    );
 }
 
 add_action( 'admin_enqueue_scripts', 'daily_menu_admin_enqueue' );
 
 function daily_menu_admin_enqueue( $hook ) {
-    if ( $hook !== 'toplevel_page_daily-menu' ) {
-        return;
+    global $daily_menu_admin_hooks;
+
+    // Daily menu page
+    if ( isset( $daily_menu_admin_hooks['menu'] ) && $hook === $daily_menu_admin_hooks['menu'] ) {
+        wp_enqueue_script( 'jquery-ui-datepicker' );
+        wp_enqueue_script( 'jquery-ui-sortable' );
+
+        wp_enqueue_style(
+            'jquery-ui-smoothness',
+            'https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css',
+            array(),
+            '1.13.2'
+        );
+
+        wp_enqueue_style(
+            'daily-menu-admin-style',
+            DAILY_MENU_URL . 'admin/css/admin-style.css',
+            array(),
+            DAILY_MENU_VERSION
+        );
+
+        wp_enqueue_script(
+            'daily-menu-admin-script',
+            DAILY_MENU_URL . 'admin/js/admin-script.js',
+            array( 'jquery', 'jquery-ui-datepicker', 'jquery-ui-sortable' ),
+            DAILY_MENU_VERSION,
+            true
+        );
+
+        wp_localize_script( 'daily-menu-admin-script', 'dailyMenuAjax', array(
+            'ajaxurl' => admin_url( 'admin-ajax.php' ),
+            'nonce'   => wp_create_nonce( 'daily_menu_save_nonce' ),
+        ) );
     }
 
-    wp_enqueue_script( 'jquery-ui-datepicker' );
-    wp_enqueue_script( 'jquery-ui-sortable' );
+    // Akce page
+    if ( isset( $daily_menu_admin_hooks['akce'] ) && $hook === $daily_menu_admin_hooks['akce'] ) {
+        wp_enqueue_script( 'jquery-ui-datepicker' );
+        wp_enqueue_media();
 
-    wp_enqueue_style(
-        'jquery-ui-smoothness',
-        'https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css',
-        array(),
-        '1.13.2'
-    );
+        wp_enqueue_style(
+            'jquery-ui-smoothness',
+            'https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css',
+            array(),
+            '1.13.2'
+        );
 
-    wp_enqueue_style(
-        'daily-menu-admin-style',
-        DAILY_MENU_URL . 'admin/css/admin-style.css',
-        array(),
-        DAILY_MENU_VERSION
-    );
+        wp_enqueue_style(
+            'daily-menu-admin-style',
+            DAILY_MENU_URL . 'admin/css/admin-style.css',
+            array(),
+            DAILY_MENU_VERSION
+        );
 
-    wp_enqueue_script(
-        'daily-menu-admin-script',
-        DAILY_MENU_URL . 'admin/js/admin-script.js',
-        array( 'jquery', 'jquery-ui-datepicker', 'jquery-ui-sortable' ),
-        DAILY_MENU_VERSION,
-        true
-    );
+        wp_enqueue_script(
+            'daily-menu-admin-akce-script',
+            DAILY_MENU_URL . 'admin/js/admin-akce-script.js',
+            array( 'jquery', 'jquery-ui-datepicker' ),
+            DAILY_MENU_VERSION,
+            true
+        );
 
-    wp_localize_script( 'daily-menu-admin-script', 'dailyMenuAjax', array(
-        'ajaxurl' => admin_url( 'admin-ajax.php' ),
-        'nonce'   => wp_create_nonce( 'daily_menu_save_nonce' ),
-    ) );
+        wp_localize_script( 'daily-menu-admin-akce-script', 'dailyMenuAkceAjax', array(
+            'ajaxurl' => admin_url( 'admin-ajax.php' ),
+            'nonce'   => wp_create_nonce( 'daily_menu_akce_nonce' ),
+        ) );
+    }
 }
 
 // ============================================================================
@@ -207,8 +283,13 @@ function daily_menu_admin_enqueue( $hook ) {
 add_action( 'admin_notices', 'daily_menu_pin_admin_notice' );
 
 function daily_menu_pin_admin_notice() {
+    global $daily_menu_admin_hooks;
     $screen = get_current_screen();
-    if ( ! $screen || $screen->id !== 'toplevel_page_daily-menu' ) {
+    $allowed_screens = array();
+    if ( isset( $daily_menu_admin_hooks['menu'] ) ) {
+        $allowed_screens[] = $daily_menu_admin_hooks['menu'];
+    }
+    if ( ! $screen || ! in_array( $screen->id, $allowed_screens, true ) ) {
         return;
     }
 
@@ -244,5 +325,6 @@ add_filter( 'robots_txt', 'daily_menu_robots_txt', 10, 2 );
 
 function daily_menu_robots_txt( $output, $public ) {
     $output .= "\nDisallow: /" . DAILY_MENU_FRONTEND_SLUG . "/\n";
+    $output .= "Disallow: /" . DAILY_MENU_AKCE_SLUG . "/\n";
     return $output;
 }
