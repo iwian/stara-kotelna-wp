@@ -43,13 +43,15 @@ function daily_menu_akce_shortcode_render( $atts ) {
             </div>
         <?php endif; ?>
 
-        <h3 class="elementor-heading-title food-menu-title"><?php echo esc_html( $title ); ?></h3>
+        <div class="daily-menu-akce-title-text">
+            <h3 class="elementor-heading-title food-menu-title"><?php echo esc_html( $title ); ?></h3>
 
-        <?php if ( ! empty( $text ) ) : ?>
-            <div class="daily-menu-akce-text">
-                <?php echo wp_kses_post( wpautop( $text ) ); ?>
-            </div>
-        <?php endif; ?>
+            <?php if ( ! empty( $text ) ) : ?>
+                <div class="daily-menu-akce-text">
+                    <?php echo wp_kses_post( wpautop( $text ) ); ?>
+                </div>
+            <?php endif; ?>
+        </div>
     </div>
     <?php
     return ob_get_clean();

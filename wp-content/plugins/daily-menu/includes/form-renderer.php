@@ -94,7 +94,7 @@ function daily_menu_render_category_block( $cat_index, $category ) {
                 <?php foreach ( $items as $item ) : ?>
                 <tr class="daily-menu-item-row">
                     <td><input type="text" class="daily-menu-item-amount" value="<?php echo esc_attr( $item['amount'] ); ?>" placeholder="0,33l" /></td>
-                    <td><input type="text" class="daily-menu-item-name widefat" value="<?php echo esc_attr( $item['name'] ); ?>" placeholder="Název jídla" /></td>
+                    <td><textarea class="daily-menu-item-name widefat" rows="1" placeholder="Název jídla"><?php echo esc_html( $item['name'] ); ?></textarea></td>
                     <td><input type="text" class="daily-menu-item-price" value="<?php echo esc_attr( $item['price'] ); ?>" placeholder="89" /></td>
                     <td><button type="button" class="button daily-menu-remove-item"><span class="dashicons dashicons-no-alt"></span></button></td>
                 </tr>

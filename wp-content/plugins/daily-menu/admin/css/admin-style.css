@@ -40,9 +40,20 @@
     text-align: center;
 }
 
-#daily-menu-wrap .daily-menu-items-table input[type="text"] {
+#daily-menu-wrap .daily-menu-items-table input[type="text"],
+#daily-menu-wrap .daily-menu-items-table textarea {
     width: 100%;
     box-sizing: border-box;
+}
+
+#daily-menu-wrap .daily-menu-items-table textarea.daily-menu-item-name {
+    resize: none;
+    overflow: hidden;
+    min-height: 36px;
+    line-height: 2;
+    padding: 4px 8px;
+    font-family: inherit;
+    font-size: inherit;
 }
 
 #daily-menu-wrap .daily-menu-remove-category,

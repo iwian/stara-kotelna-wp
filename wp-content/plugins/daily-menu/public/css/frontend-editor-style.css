@@ -70,7 +70,8 @@
 /* ---------- Text inputs ---------- */
 
 .daily-menu-frontend-body input[type="text"],
-.daily-menu-frontend-body input[type="number"] {
+.daily-menu-frontend-body input[type="number"],
+.daily-menu-frontend-body textarea {
     font-size: 13px;
     padding: 4px 8px;
     line-height: 2;
@@ -83,7 +84,8 @@
     transition: border-color 0.1s;
 }
 
-.daily-menu-frontend-body input[type="text"]:focus {
+.daily-menu-frontend-body input[type="text"]:focus,
+.daily-menu-frontend-body textarea:focus {
     border-color: #2271b1;
     box-shadow: 0 0 0 1px #2271b1;
 }
@@ -260,9 +262,17 @@
     text-align: center;
 }
 
-#daily-menu-wrap .daily-menu-items-table input[type="text"] {
+#daily-menu-wrap .daily-menu-items-table input[type="text"],
+#daily-menu-wrap .daily-menu-items-table textarea {
     width: 100%;
     box-sizing: border-box;
+}
+
+#daily-menu-wrap .daily-menu-items-table textarea.daily-menu-item-name {
+    resize: none;
+    overflow: hidden;
+    min-height: 36px;
+    font-family: inherit;
 }
 
 #daily-menu-wrap .daily-menu-remove-category,
@@ -495,7 +505,8 @@
         border-bottom: none;
     }
 
-    #daily-menu-wrap .daily-menu-items-table input[type="text"] {
+    #daily-menu-wrap .daily-menu-items-table input[type="text"],
+    #daily-menu-wrap .daily-menu-items-table textarea {
         font-size: 16px;
         padding: 8px 10px;
     }

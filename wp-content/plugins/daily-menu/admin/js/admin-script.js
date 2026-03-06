@@ -32,7 +32,7 @@
     function buildItemRowHtml(amount, name, price) {
         return '<tr class="daily-menu-item-row">' +
             '<td><input type="text" class="daily-menu-item-amount" value="' + escAttr(amount) + '" placeholder="0,33l" /></td>' +
-            '<td><input type="text" class="daily-menu-item-name widefat" value="' + escAttr(name) + '" placeholder="Název jídla" /></td>' +
+            '<td><textarea class="daily-menu-item-name widefat" rows="1" placeholder="Název jídla">' + escAttr(name) + '</textarea></td>' +
             '<td><input type="text" class="daily-menu-item-price" value="' + escAttr(price) + '" placeholder="89" /></td>' +
             '<td><button type="button" class="button daily-menu-remove-item"><span class="dashicons dashicons-no-alt"></span></button></td>' +
             '</tr>';
@@ -83,7 +83,21 @@
         return data;
     }
 
+    function autoResizeTextarea(el) {
+        el.style.height = 'auto';
+        el.style.height = el.scrollHeight + 'px';
+    }
+
     $(document).ready(function() {
+
+        // Auto-resize item name textareas
+        $(document).on('input', '.daily-menu-item-name', function() {
+            autoResizeTextarea(this);
+        });
+        // Initial resize for existing textareas
+        $('.daily-menu-item-name').each(function() {
+            autoResizeTextarea(this);
+        });
 
         // Datepicker with Czech locale
         $('#daily-menu-date').datepicker({
