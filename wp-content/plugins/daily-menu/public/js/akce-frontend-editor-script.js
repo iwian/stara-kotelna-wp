@@ -122,20 +122,6 @@
             }
         });
 
-        // Logout
-        $('#daily-menu-akce-logout').on('click', function() {
-            if (!confirm('Opravdu se chcete odhlásit?')) {
-                return;
-            }
-            $.post(dailyMenuAkceAjax.ajaxurl, {
-                action: 'daily_menu_logout',
-                nonce: dailyMenuAkceAjax.logoutNonce
-            }, function() {
-                $(window).off('beforeunload.daily-menu-akce');
-                window.location.reload();
-            });
-        });
-
         // Save
         $('#daily-menu-akce-save').on('click', function() {
             var data = collectFormData();

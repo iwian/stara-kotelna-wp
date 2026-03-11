@@ -3,6 +3,13 @@ if ( ! defined( 'WPINC' ) ) {
     die();
 }
 
+// Handle logout
+if ( isset( $_GET['daily_menu_logout'] ) && wp_verify_nonce( isset( $_GET['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ) : '', 'daily_menu_logout' ) ) {
+    daily_menu_clear_auth_cookie();
+    wp_redirect( home_url( '/' . DAILY_MENU_FRONTEND_SLUG . '/' ) );
+    exit;
+}
+
 // Handle PIN form submission
 $is_authenticated = daily_menu_frontend_auth_check();
 $pin_error        = '';
@@ -56,7 +63,9 @@ if ( ! $is_authenticated && isset( $_POST['daily_menu_pin'] ) ) {
         <div class="wrap" id="daily-menu-wrap">
             <div class="daily-menu-header">
                 <h1>Denní menu</h1>
-                <button type="button" id="daily-menu-logout" class="button button-logout">Odhlásit se</button>
+                <a href="<?php echo esc_url( wp_nonce_url( home_url( '/' . DAILY_MENU_FRONTEND_SLUG . '/?daily_menu_logout=1' ), 'daily_menu_logout' ) ); ?>"
+                   class="button button-logout"
+                   onclick="return confirm('Opravdu se chcete odhlásit?')">Odhlásit se</a>
             </div>
             <?php daily_menu_render_editor_form(); ?>
         </div>
