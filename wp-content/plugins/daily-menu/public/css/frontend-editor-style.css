@@ -34,10 +34,29 @@
 .daily-menu-frontend-body .wrap h1 {
     font-size: 23px;
     font-weight: 400;
-    margin: 0 0 15px;
+    margin: 0;
     padding: 9px 0 4px;
     line-height: 1.3;
     color: #1d2327;
+}
+
+.daily-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.daily-menu-frontend-body .button-logout {
+    color: #b32d2e;
+    border-color: #b32d2e;
+    background: #fff;
+}
+
+.daily-menu-frontend-body .button-logout:hover {
+    color: #dc3232;
+    border-color: #dc3232;
+    background: #fcf0f1;
 }
 
 /* ---------- .form-table ---------- */

@@ -11,7 +11,7 @@ function daily_menu_akce_frontend_ajax_save() {
     check_ajax_referer( 'daily_menu_akce_frontend_nonce', 'nonce' );
 
     if ( ! daily_menu_frontend_auth_check() ) {
-        wp_send_json_error( 'Neautorizovaný přístup. Přihlaste se znovu.' );
+        wp_send_json_error( array( 'message' => 'Přihlášení vypršelo. Přihlaste se znovu.', 'auth_error' => true ) );
     }
 
     $sanitized = daily_menu_akce_sanitize_data( isset( $_POST['akce_data'] ) ? $_POST['akce_data'] : '' );
@@ -32,7 +32,7 @@ function daily_menu_akce_frontend_ajax_upload() {
     check_ajax_referer( 'daily_menu_akce_frontend_nonce', 'nonce' );
 
     if ( ! daily_menu_frontend_auth_check() ) {
-        wp_send_json_error( 'Neautorizovaný přístup.' );
+        wp_send_json_error( array( 'message' => 'Přihlášení vypršelo. Přihlaste se znovu.', 'auth_error' => true ) );
     }
 
     if ( empty( $_FILES['image'] ) ) {

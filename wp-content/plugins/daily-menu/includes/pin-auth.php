@@ -131,6 +131,14 @@ function daily_menu_check_auth_cookie() {
 }
 
 /**
+ * Clear the authentication cookie (logout).
+ */
+function daily_menu_clear_auth_cookie() {
+    setcookie( DAILY_MENU_COOKIE_NAME, '', time() - HOUR_IN_SECONDS, '/', '', is_ssl(), true );
+    unset( $_COOKIE[ DAILY_MENU_COOKIE_NAME ] );
+}
+
+/**
  * Combined auth check: logged-in WP user with edit_posts OR valid PIN cookie.
  *
  * @return bool True if authorized.

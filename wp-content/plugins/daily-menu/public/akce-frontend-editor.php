@@ -54,14 +54,18 @@ if ( ! $is_authenticated && isset( $_POST['daily_menu_pin'] ) ) {
     <?php if ( $is_authenticated ) : ?>
 
         <div class="wrap" id="daily-menu-akce-wrap">
-            <h1>Akce</h1>
+            <div class="daily-menu-header">
+                <h1>Akce</h1>
+                <button type="button" id="daily-menu-akce-logout" class="button button-logout">Odhlásit se</button>
+            </div>
             <?php daily_menu_akce_render_editor_form( 'frontend' ); ?>
         </div>
 
         <script>
             var dailyMenuAkceAjax = {
                 ajaxurl: '<?php echo esc_js( admin_url( 'admin-ajax.php' ) ); ?>',
-                nonce: '<?php echo esc_js( wp_create_nonce( 'daily_menu_akce_frontend_nonce' ) ); ?>'
+                nonce: '<?php echo esc_js( wp_create_nonce( 'daily_menu_akce_frontend_nonce' ) ); ?>',
+                logoutNonce: '<?php echo esc_js( wp_create_nonce( 'daily_menu_logout' ) ); ?>'
             };
         </script>
         <script src="<?php echo esc_url( DAILY_MENU_URL . 'public/js/akce-frontend-editor-script.js' ); ?>?v=<?php echo esc_attr( DAILY_MENU_VERSION ); ?>"></script>

@@ -122,6 +122,20 @@
             }
         });
 
+        // Logout
+        $('#daily-menu-akce-logout').on('click', function() {
+            if (!confirm('Opravdu se chcete odhlásit?')) {
+                return;
+            }
+            $.post(dailyMenuAkceAjax.ajaxurl, {
+                action: 'daily_menu_logout',
+                nonce: dailyMenuAkceAjax.logoutNonce
+            }, function() {
+                $(window).off('beforeunload.daily-menu-akce');
+                window.location.reload();
+            });
+        });
+
         // Save
         $('#daily-menu-akce-save').on('click', function() {
             var data = collectFormData();
@@ -144,9 +158,16 @@
                             '<div class="notice notice-success is-dismissible"><p>Akce byla uložena.</p></div>'
                         );
                     } else {
+                        var msg = (response.data && response.data.message) ? response.data.message : (response.data || 'Neznámá chyba');
                         $('#daily-menu-akce-messages').html(
-                            '<div class="notice notice-error is-dismissible"><p>Chyba: ' + (response.data || 'Neznámá chyba') + '</p></div>'
+                            '<div class="notice notice-error is-dismissible"><p>Chyba: ' + msg + '</p></div>'
                         );
+                        if (response.data && response.data.auth_error) {
+                            setTimeout(function() {
+                                $(window).off('beforeunload.daily-menu-akce');
+                                window.location.reload();
+                            }, 2000);
+                        }
                     }
                 },
                 error: function() {

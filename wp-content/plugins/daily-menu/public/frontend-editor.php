@@ -54,14 +54,18 @@ if ( ! $is_authenticated && isset( $_POST['daily_menu_pin'] ) ) {
     <?php if ( $is_authenticated ) : ?>
 
         <div class="wrap" id="daily-menu-wrap">
-            <h1>Denní menu</h1>
+            <div class="daily-menu-header">
+                <h1>Denní menu</h1>
+                <button type="button" id="daily-menu-logout" class="button button-logout">Odhlásit se</button>
+            </div>
             <?php daily_menu_render_editor_form(); ?>
         </div>
 
         <script>
             var dailyMenuAjax = {
                 ajaxurl: '<?php echo esc_js( admin_url( 'admin-ajax.php' ) ); ?>',
-                nonce: '<?php echo esc_js( wp_create_nonce( 'daily_menu_frontend_nonce' ) ); ?>'
+                nonce: '<?php echo esc_js( wp_create_nonce( 'daily_menu_frontend_nonce' ) ); ?>',
+                logoutNonce: '<?php echo esc_js( wp_create_nonce( 'daily_menu_logout' ) ); ?>'
             };
         </script>
         <script src="<?php echo esc_url( DAILY_MENU_URL . 'public/js/frontend-editor-script.js' ); ?>?v=<?php echo esc_attr( DAILY_MENU_VERSION ); ?>"></script>
